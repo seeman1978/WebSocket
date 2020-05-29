@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //var ws = new WebSocket("ws://192.168.137.24/wq");
+        var ws = new WebSocket("ws://192.168.137.24/bpmws/tws");
+        ws.onopen = function() {
+            ws.send("ping");
+            //ws.send("Hello, world");
+            window.setInterval("clock()", 10000);
+        };
+        ws.onmessage = function (evt) {
+            console.log(evt.data);
+            //alert(evt.data);
+        };
+        ws.onclose = function()
+        {
+          // 关闭 websocket
+          alert("连接已关闭...");
+        };
+
+        function clock()
+        {
+            console.log("readyState", ws.readyState)
+            if(ws.readyState === 1)
+            {
+                ws.send("ping")
+            }
+            else
+            {
+                //alert(ws.readyState);
+                //ws.close()
+            }
+        }
+
+        function sub()
+        {
+            console.log("readyState", ws.readyState)
+            if(ws.readyState === 1)
+            {
+                ws.send("{\"command1\":\"test\"}")
+            }
+            else
+            {
+                //alert(ws.readyState);
+                //ws.close()
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" onclick="sub()" name="click me">
+</body>
+</html>
